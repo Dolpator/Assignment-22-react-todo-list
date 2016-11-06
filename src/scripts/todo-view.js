@@ -13,12 +13,14 @@ const ToDoView = React.createClass({
       let newListModel2 = new ToDoListModel()
 
       let listProperties = {
-         list: "Take Out the Garbage",
-         checked: false
+         list: "Take Out the Garbage" ,
+         checked: false,
+         dueDate: "Due: " + "11/13/2016",
       }
       let listProperties2 = {
          list: "Wash the Dishes",
-         checked: false
+         checked: false,
+         dueDate: "Due: " + "11/16/2016",
       }
 
       newListModel.set(listProperties)
@@ -33,6 +35,12 @@ const ToDoView = React.createClass({
       }
       return this.listStateObj
    },
+// componentWillMount(){
+//    Backbone.Event.on(function(){
+//
+//
+//    })
+// },
 
    _doneSubmit: function(){
       window.location.hash='#done'
@@ -47,7 +55,7 @@ const ToDoView = React.createClass({
       checkedBoxEl.forEach(function(objVal, i){
          //console.log(objVal)
          if(objVal.checked === true){
-            var listItem = objVal.parentNode.parentNode;
+            var listItem = objVal.parentNode;
             listItem.parentNode.removeChild(listItem)
 
             //console.log('is checked')
@@ -61,11 +69,13 @@ const ToDoView = React.createClass({
       evt.preventDefault()
      //console.log (this.refs.listInputEl.value)
       let theList = this.refs.listInputEl.value
+      let dueDate = this.refs.dueDateEl.value
       let newList = new ToDoListModel()
       newList.set({
-         list: theList
+         list: theList,
+         dueDate: "Due: " + dueDate,
       })
-
+      console.log(newList)
       let copyList = this.state.taskListData.map(function(listData){
 
          return listData;
@@ -79,10 +89,6 @@ const ToDoView = React.createClass({
       this.setState(newListObj)
    },
 
-   _toggleChecked: function(){
-      //console.log('toggling', this);
-
-   },
    render: function(){
       console.log(this.state.taskListData)
       return (
@@ -91,7 +97,12 @@ const ToDoView = React.createClass({
                <div className="row">
                   <div className="col-md-6 col-md-offset-3 input-div">
                      <form>
-                        <input className="form-control" ref="listInputEl" placeholder="Enter Task"></input>
+                     <div>
+                        <input className="form-control task-input" ref="listInputEl" placeholder="Enter Task"></input>
+                     </div>
+                     <div>
+                        <input className="form-control date-input" ref="dueDateEl" placeholder="MM/DD/YEAR"></input>
+                     </div>
                         <button className="btn primary" onClick={this._handleSubmit}>Add to List</button>
                      </form>
                   </div>
@@ -128,10 +139,12 @@ const ToDoView = React.createClass({
 
             return (
                   <div className="checkbox">
-                  <p>
-                  {this.props.listModelEl.get('list')}
-                  {<input type='checkbox' className="check-box" />}
-                  </p>
+                  <div>
+                     {this.props.listModelEl.get('list')}
+                  </div>
+                     {this.props.listModelEl.get('dueDate')}
+                     <input type='checkbox' className="check-box" />
+
                   </div>
                   )
                }

@@ -9,6 +9,7 @@ const DoneList = React.createClass({
       window.location.hash=''
    },
 
+   
 
 
       render: function(){
@@ -20,7 +21,7 @@ const DoneList = React.createClass({
                      <div className="col-md-6 col-md-offset-3 input-div">
                         <p></p>
                      </div>
-                     <button className="btn primary" onClick={this._homePage}>Go Home</button>
+                     <button className="btn primary" onClick={this._homePage}>Return to List</button>
 
                   </div>
 
